@@ -1,0 +1,256 @@
+UserSearchResultModel:
+  description: 用户信息一览
+  type: object
+  properties:
+    users:
+      type: array
+      items:
+        $ref: "../../openapi.yaml#/components/schemas/UserResultModel"
+    limit:
+      $ref: "../../openapi.yaml#/components/schemas/limit"
+    offset:
+      $ref: "../../openapi.yaml#/components/schemas/offset"
+UserResultModel:
+  description: 用户的基本信息
+  type: object
+  properties:
+    id:
+      description: 用户id
+      type: integer
+      format: int32
+    user_name:
+      description: 用户名字
+      type: string
+      maxLength: 32
+    address:
+      description: 用户地址
+      type: string
+      maxLength: 128
+    phone:
+      description: 用户电话
+      type: string
+      maxLength: 11
+    birthday:
+      description: 生日
+      type: string
+      format: date
+    user_email:
+      description: 用户邮箱
+      type: string
+      maxLength: 45
+    note:
+      description: 签名
+      type: string
+      maxLength: 100
+    password:
+      description: 密码
+      type: string
+      maxLength: 128
+    nickname:
+      description: 昵称
+      type: string
+      maxLength: 45
+    nation:
+      description: 国籍
+      type: string
+      maxLength: 45
+    province:
+      description: 省份
+      type: string
+      maxLength: 45
+    city:
+      description: 城市
+      type: string
+      maxLength: 45
+    height:
+      description: 身高
+      type: string
+      maxLength: 45
+    age:
+      description: 身高
+      type: integer
+      format: int32
+    collage:
+      description: 毕业院校
+      type: string
+      maxLength: 45
+    sex:
+      description: 性别
+      type: integer
+      format: int32
+    occupation:
+      description: 职业
+      type: string
+      maxLength: 45
+    hobby:
+      description: 爱好
+      type: string
+      maxLength: 45
+UserCreateModel:
+  description: 用户的基本信息(登录)
+  type: object
+  properties:
+    user_name:
+      description: 用户名字
+      type: string
+      maxLength: 32
+    address:
+      description: 用户地址
+      type: string
+      maxLength: 128
+    phone:
+      description: 用户电话
+      type: string
+      maxLength: 11
+    birthday:
+      description: 生日
+      type: string
+      format: date
+    user_email:
+      description: 用户邮箱
+      type: string
+      maxLength: 45
+    note:
+      description: 签名
+      type: string
+      maxLength: 100
+    password:
+      description: 密码
+      type: string
+      maxLength: 128
+    nickname:
+      description: 昵称
+      type: string
+      maxLength: 45
+    nation:
+      description: 国籍
+      type: string
+      maxLength: 45
+    province:
+      description: 省份
+      type: string
+      maxLength: 45
+    city:
+      description: 城市
+      type: string
+      maxLength: 45
+    height:
+      description: 身高
+      type: string
+      maxLength: 45
+    age:
+      description: 身高
+      type: integer
+      format: int32
+    collage:
+      description: 毕业院校
+      type: string
+      maxLength: 45
+    sex:
+      description: 性别
+      type: integer
+      format: int32
+    occupation:
+      description: 职业
+      type: string
+      maxLength: 45
+    hobby:
+      description: 爱好
+      type: string
+      maxLength: 45
+  required:
+    - user_name
+    - user_email
+    - password
+    - nation
+    - province
+    - city
+    - height
+    - sex
+    - occupation
+UserUpdateModel:
+  description: 用户的基本信息(更新)
+  type: object
+  properties:
+    id:
+      description: 用户id
+      type: integer
+      format: int32
+    user_name:
+      description: 用户名字
+      type: string
+      maxLength: 32
+    address:
+      description: 用户地址
+      type: string
+      maxLength: 128
+    phone:
+      description: 用户电话
+      type: string
+      maxLength: 11
+    birthday:
+      description: 生日
+      type: string
+      format: date
+    user_email:
+      description: 用户邮箱
+      type: string
+      maxLength: 45
+    note:
+      description: 签名
+      type: string
+      maxLength: 100
+    password:
+      description: 密码
+      type: string
+      maxLength: 128
+    nickname:
+      description: 昵称
+      type: string
+      maxLength: 45
+    nation:
+      description: 国籍
+      type: string
+      maxLength: 45
+    province:
+      description: 省份
+      type: string
+      maxLength: 45
+    city:
+      description: 城市
+      type: string
+      maxLength: 45
+    height:
+      description: 身高
+      type: string
+      maxLength: 45
+    age:
+      description: 身高
+      type: integer
+      format: int32
+    collage:
+      description: 毕业院校
+      type: string
+      maxLength: 45
+    sex:
+      description: 性别
+      type: integer
+      format: int32
+    occupation:
+      description: 职业
+      type: string
+      maxLength: 45
+    hobby:
+      description: 爱好
+      type: string
+      maxLength: 45
+  required:
+    - user_name
+    - user_email
+    - password
+    - nation
+    - province
+    - city
+    - height
+    - sex
+    - occupation

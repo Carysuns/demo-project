@@ -1,0 +1,597 @@
+openapi: 3.0.0
+info:
+  title: openapi-test-20201007
+  description: open api test ver 20201007
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080/'
+paths:
+  '/user/{id}':
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: 用户id指定
+        schema:
+          type: integer
+          format: int32
+    get:
+      summary: 用户信息检索
+      description: 用户信息检索的操作
+      operationId: findById
+      tags:
+        - users
+      responses:
+        '200':
+          description: 处理成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResultModel'
+        '400':
+          $ref: '#/components/responses/CommonBadRequestResponse'
+        '404':
+          $ref: '#/components/responses/CommonNotFoundResponse'
+        '500':
+          $ref: '#/components/responses/CommonInternalServerErrorResponse'
+    put:
+      summary: 用户信息的更新
+      description: 根据用户id更新用户信息
+      operationId: updateById
+      tags:
+        - users
+      requestBody:
+        description: 用户情报(登录)
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdateModel'
+      responses:
+        '200':
+          description: 処理成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResultModel'
+        '400':
+          $ref: '#/components/responses/CommonBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/CommonUnauthorizedResponse'
+        '404':
+          $ref: '#/components/responses/CommonNotFoundResponse'
+        '409':
+          $ref: '#/components/responses/CommonConflictResponse'
+        '500':
+          $ref: '#/components/responses/CommonInternalServerErrorResponse'
+    delete:
+      summary: 用户信息的删除
+      description: 根据用户id删除用户信息
+      operationId: deleteById
+      tags:
+        - users
+      responses:
+        '200':
+          description: 処理成功
+        '400':
+          $ref: '#/components/responses/CommonBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/CommonUnauthorizedResponse'
+        '404':
+          $ref: '#/components/responses/CommonNotFoundResponse'
+        '500':
+          $ref: '#/components/responses/CommonInternalServerErrorResponse'
+  /user:
+    get:
+      summary: 用户信息一览检索
+      description: 任意条件指定的情况下，检索用户数据一览
+      operationId: search
+      tags:
+        - users
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/userName'
+        - $ref: '#/components/parameters/address'
+        - $ref: '#/components/parameters/nation'
+        - $ref: '#/components/parameters/province'
+        - $ref: '#/components/parameters/city'
+        - $ref: '#/components/parameters/age'
+        - $ref: '#/components/parameters/sex'
+        - $ref: '#/components/parameters/collage'
+        - $ref: '#/components/parameters/occupation'
+        - $ref: '#/components/parameters/nickname'
+        - $ref: '#/components/parameters/phone'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/order'
+      responses:
+        '200':
+          description: 処理成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSearchResultModel'
+        '400':
+          $ref: '#/components/responses/CommonBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/CommonUnauthorizedResponse'
+        '500':
+          $ref: '#/components/responses/CommonInternalServerErrorResponse'
+    post:
+      summary: 用户信息登录
+      description: 用户信息登录的操作
+      operationId: create
+      tags:
+        - users
+      requestBody:
+        description: 用户情报(登录)
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateModel'
+      responses:
+        '201':
+          description: 処理成功
+          $ref: '#/components/responses/CommonCreatedResponse'
+        '400':
+          $ref: '#/components/responses/CommonBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/CommonUnauthorizedResponse'
+        '409':
+          $ref: '#/components/responses/CommonConflictResponse'
+        '500':
+          $ref: '#/components/responses/CommonInternalServerErrorResponse'
+components:
+  schemas:
+    limit:
+      type: integer
+      format: int64
+      minimum: 1
+    offset:
+      type: integer
+      format: int64
+      minimum: 0
+    CreatedDate:
+      type: object
+      properties:
+        created_date:
+          description: 作成日期
+          type: string
+          format: date-time
+    ModifiedDate:
+      type: object
+      properties:
+        modified_date:
+          description: 最新更新日期
+          type: string
+          format: date-time
+    ModifiedByUserId:
+      type: object
+      properties:
+        modified_by_user_id:
+          description: 最新更新者
+          type: string
+    BadRequestResponseModel:
+      type: object
+      description: HTTP Status 400 Bad Request
+      properties:
+        type:
+          description: 识别问题类型的URI引用
+          type: string
+        title:
+          description: 问题类型的概要
+          type: string
+        invalid-params:
+          type: array
+          items:
+            $ref: '#/components/schemas/BadRequestInvalidParamsResponseModel'
+    BadRequestInvalidParamsResponseModel:
+      type: array
+      items:
+        type: object
+        properties:
+          name:
+            description: 已禁用的项目名称
+            type: string
+          reason:
+            description: 无效的理由
+            type: string
+    UserSearchResultModel:
+      description: 用户信息一览
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserResultModel'
+        limit:
+          $ref: '#/components/schemas/limit'
+        offset:
+          $ref: '#/components/schemas/offset'
+    UserResultModel:
+      description: 用户的基本信息
+      type: object
+      properties:
+        id:
+          description: 用户id
+          type: integer
+          format: int32
+        user_name:
+          description: 用户名字
+          type: string
+          maxLength: 32
+        address:
+          description: 用户地址
+          type: string
+          maxLength: 128
+        phone:
+          description: 用户电话
+          type: string
+          maxLength: 11
+        birthday:
+          description: 生日
+          type: string
+          format: date
+        user_email:
+          description: 用户邮箱
+          type: string
+          maxLength: 45
+        note:
+          description: 签名
+          type: string
+          maxLength: 100
+        password:
+          description: 密码
+          type: string
+          maxLength: 128
+        nickname:
+          description: 昵称
+          type: string
+          maxLength: 45
+        nation:
+          description: 国籍
+          type: string
+          maxLength: 45
+        province:
+          description: 省份
+          type: string
+          maxLength: 45
+        city:
+          description: 城市
+          type: string
+          maxLength: 45
+        height:
+          description: 身高
+          type: string
+          maxLength: 45
+        age:
+          description: 身高
+          type: integer
+          format: int32
+        collage:
+          description: 毕业院校
+          type: string
+          maxLength: 45
+        sex:
+          description: 性别
+          type: integer
+          format: int32
+        occupation:
+          description: 职业
+          type: string
+          maxLength: 45
+        hobby:
+          description: 爱好
+          type: string
+          maxLength: 45
+    UserCreateModel:
+      description: 用户的基本信息(登录)
+      type: object
+      properties:
+        user_name:
+          description: 用户名字
+          type: string
+          maxLength: 32
+        address:
+          description: 用户地址
+          type: string
+          maxLength: 128
+        phone:
+          description: 用户电话
+          type: string
+          maxLength: 11
+        birthday:
+          description: 生日
+          type: string
+          format: date
+        user_email:
+          description: 用户邮箱
+          type: string
+          maxLength: 45
+        note:
+          description: 签名
+          type: string
+          maxLength: 100
+        password:
+          description: 密码
+          type: string
+          maxLength: 128
+        nickname:
+          description: 昵称
+          type: string
+          maxLength: 45
+        nation:
+          description: 国籍
+          type: string
+          maxLength: 45
+        province:
+          description: 省份
+          type: string
+          maxLength: 45
+        city:
+          description: 城市
+          type: string
+          maxLength: 45
+        height:
+          description: 身高
+          type: string
+          maxLength: 45
+        age:
+          description: 身高
+          type: integer
+          format: int32
+        collage:
+          description: 毕业院校
+          type: string
+          maxLength: 45
+        sex:
+          description: 性别
+          type: integer
+          format: int32
+        occupation:
+          description: 职业
+          type: string
+          maxLength: 45
+        hobby:
+          description: 爱好
+          type: string
+          maxLength: 45
+      required:
+        - user_name
+        - user_email
+        - password
+        - nation
+        - province
+        - city
+        - height
+        - sex
+        - occupation
+    UserUpdateModel:
+      description: 用户的基本信息(更新)
+      type: object
+      properties:
+        id:
+          description: 用户id
+          type: integer
+          format: int32
+        user_name:
+          description: 用户名字
+          type: string
+          maxLength: 32
+        address:
+          description: 用户地址
+          type: string
+          maxLength: 128
+        phone:
+          description: 用户电话
+          type: string
+          maxLength: 11
+        birthday:
+          description: 生日
+          type: string
+          format: date
+        user_email:
+          description: 用户邮箱
+          type: string
+          maxLength: 45
+        note:
+          description: 签名
+          type: string
+          maxLength: 100
+        password:
+          description: 密码
+          type: string
+          maxLength: 128
+        nickname:
+          description: 昵称
+          type: string
+          maxLength: 45
+        nation:
+          description: 国籍
+          type: string
+          maxLength: 45
+        province:
+          description: 省份
+          type: string
+          maxLength: 45
+        city:
+          description: 城市
+          type: string
+          maxLength: 45
+        height:
+          description: 身高
+          type: string
+          maxLength: 45
+        age:
+          description: 身高
+          type: integer
+          format: int32
+        collage:
+          description: 毕业院校
+          type: string
+          maxLength: 45
+        sex:
+          description: 性别
+          type: integer
+          format: int32
+        occupation:
+          description: 职业
+          type: string
+          maxLength: 45
+        hobby:
+          description: 爱好
+          type: string
+          maxLength: 45
+      required:
+        - user_name
+        - user_email
+        - password
+        - nation
+        - province
+        - city
+        - height
+        - sex
+        - occupation
+  responses:
+    CommonCreatedResponse:
+      description: 显示资源添加成功
+      headers:
+        Location:
+          $ref: '#/components/headers/Location'
+    CommonBadRequestResponse:
+      description: 错误参数
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/BadRequestResponseModel'
+    CommonUnauthorizedResponse:
+      description: 令牌认证失败
+    CommonNotFoundResponse:
+      description: 指定的资源不存在
+    CommonConflictResponse:
+      description: 矛盾的数据
+    CommonCreateConflictResponse:
+      description: 已经存在相应的资源
+    CommonUpdateConflictResponse:
+      description: 相应的资源状态不一致（更新）
+    CommonInternalServerErrorResponse:
+      description: 未知错误
+  headers:
+    Location:
+      description: 显示创建资源的路径
+      schema:
+        type: string
+        format: uri
+  parameters:
+    order:
+      name: order
+      in: query
+      description: 以逗号分隔的方式指定排序顺序的降序时，排头为负数
+      style: form
+      explode: false
+      schema:
+        type: string
+    fields:
+      name: fields
+      in: query
+      description: 在列表中显示的列被省略时显示所有列
+      style: form
+      explode: false
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      description: 指定要返回的数据件数
+      schema:
+        $ref: '#/components/schemas/limit'
+    offset:
+      name: offset
+      in: query
+      description: 指定在要返回的数据中，不返还从开头用“offset”写的件数的数据
+      schema:
+        $ref: '#/components/schemas/offset'
+    id:
+      name: id
+      in: query
+      description: 用户id　：　检索key、完全一致
+      schema:
+        type: integer
+        format: int32
+    userName:
+      name: user_name
+      in: query
+      description: 用户名字　：　检索key、完全一致
+      schema:
+        type: string
+    address:
+      name: address
+      in: query
+      description: 用户地址　：　检索key、完全一致
+      schema:
+        type: string
+    phone:
+      name: phone
+      in: query
+      description: 用户电话　：　检索key、完全一致
+      schema:
+        type: string
+    nation:
+      name: nation
+      in: query
+      description: 国籍　：　检索key、完全一致
+      schema:
+        type: string
+    province:
+      name: province
+      in: query
+      description: 省份　：　检索key、完全一致
+      schema:
+        type: string
+    city:
+      name: city
+      in: query
+      description: 城市　：　检索key、完全一致
+      schema:
+        type: string
+    age:
+      name: age
+      in: query
+      description: 年龄　：　检索key、完全一致
+      schema:
+        type: integer
+        format: int32
+    collage:
+      name: collage
+      in: query
+      description: 毕业院校　：　检索key、完全一致
+      schema:
+        type: string
+    occupation:
+      name: occupation
+      in: query
+      description: 职业　：　检索key、完全一致
+      schema:
+        type: string
+    sex:
+      name: sex
+      in: query
+      description: 性别　：　检索key、完全一致
+      schema:
+        type: integer
+        format: int32
+    nickname:
+      name: nickname
+      in: query
+      description: 昵称　：　检索key、完全一致
+      schema:
+        type: string
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: Bearer
+      description: 认证的说明
+security:
+  - Bearer: []
+tags:
+  - name: users
+    description: 用户信息的操作

@@ -1,0 +1,60 @@
+get:
+  summary: 用户信息一览检索
+  description: 任意条件指定的情况下，检索用户数据一览
+  operationId: search
+  tags:
+    - users
+  parameters:
+    - $ref: "../../openapi.yaml#/components/parameters/id"
+    - $ref: "../../openapi.yaml#/components/parameters/userName"
+    - $ref: "../../openapi.yaml#/components/parameters/address"
+    - $ref: "../../openapi.yaml#/components/parameters/nation"
+    - $ref: "../../openapi.yaml#/components/parameters/province"
+    - $ref: "../../openapi.yaml#/components/parameters/city"
+    - $ref: "../../openapi.yaml#/components/parameters/age"
+    - $ref: "../../openapi.yaml#/components/parameters/sex"
+    - $ref: "../../openapi.yaml#/components/parameters/collage"
+    - $ref: "../../openapi.yaml#/components/parameters/occupation"
+    - $ref: "../../openapi.yaml#/components/parameters/nickname"
+    - $ref: "../../openapi.yaml#/components/parameters/phone"
+    - $ref: "../../openapi.yaml#/components/parameters/limit"
+    - $ref: "../../openapi.yaml#/components/parameters/offset"
+    - $ref: "../../openapi.yaml#/components/parameters/order"
+  responses:
+    "200":
+      description: 処理成功
+      content:
+        "application/json":
+          schema:
+            $ref: "../../openapi.yaml#/components/schemas/UserSearchResultModel"
+    "400":
+      $ref: "../../openapi.yaml#/components/responses/CommonBadRequestResponse"
+    "401":
+      $ref: "../../openapi.yaml#/components/responses/CommonUnauthorizedResponse"
+    "500":
+      $ref: "../../openapi.yaml#/components/responses/CommonInternalServerErrorResponse"
+post:
+  summary: 用户信息登录
+  description: 用户信息登录的操作
+  operationId: create
+  tags:
+    - users
+  requestBody:
+    description: 用户情报(登录)
+    content:
+      "application/json":
+        schema:
+          $ref: "../../openapi.yaml#/components/schemas/UserCreateModel"
+  responses:
+    "201":
+      description: 処理成功
+      $ref: "../../openapi.yaml#/components/responses/CommonCreatedResponse"
+    "400":
+      $ref: "../../openapi.yaml#/components/responses/CommonBadRequestResponse"
+    "401":
+      $ref: "../../openapi.yaml#/components/responses/CommonUnauthorizedResponse"
+    "409":
+      $ref: "../../openapi.yaml#/components/responses/CommonConflictResponse"
+    "500":
+      $ref: "../../openapi.yaml#/components/responses/CommonInternalServerErrorResponse"
+      

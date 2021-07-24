@@ -1,0 +1,76 @@
+parameters:
+  # /user/{id}的id
+  - name: id
+    in: path
+    required: true
+    description: 用户id指定
+    schema:
+      type: integer
+      format: int32
+get:
+  summary: 用户信息检索
+  description: 用户信息检索的操作
+  operationId: findById
+  tags:
+    - users
+  responses:
+    "200":
+      description: 处理成功
+      content:
+        "application/json":
+          schema:
+            $ref: "../../openapi.yaml#/components/schemas/UserResultModel"
+    "400":
+      $ref: "../../openapi.yaml#/components/responses/CommonBadRequestResponse"
+    "404":
+      $ref: "../../openapi.yaml#/components/responses/CommonNotFoundResponse"
+    "500":
+      $ref: "../../openapi.yaml#/components/responses/CommonInternalServerErrorResponse"
+put:
+  summary: 用户信息的更新
+  description: 根据用户id更新用户信息
+  operationId: updateById
+  tags:
+    - users
+  requestBody:
+    description: 用户情报(登录)
+    content:
+      "application/json":
+        schema:
+          $ref: "../../openapi.yaml#/components/schemas/UserUpdateModel"
+  responses:
+    "200":
+      description: 処理成功
+      content:
+        "application/json":
+          schema:
+            $ref: "../../openapi.yaml#/components/schemas/UserResultModel"
+    "400":
+      $ref: "../../openapi.yaml#/components/responses/CommonBadRequestResponse"
+    "401":
+      $ref: "../../openapi.yaml#/components/responses/CommonUnauthorizedResponse"
+    "404":
+      $ref: "../../openapi.yaml#/components/responses/CommonNotFoundResponse"
+    "409":
+      $ref: "../../openapi.yaml#/components/responses/CommonConflictResponse"
+    "500":
+      $ref: "../../openapi.yaml#/components/responses/CommonInternalServerErrorResponse"
+delete:
+  summary: 用户信息的删除
+  description: 根据用户id删除用户信息
+  operationId: deleteById
+  tags:
+    - users
+  responses:
+    "200":
+      description: 処理成功
+    "400":
+      $ref: "../../openapi.yaml#/components/responses/CommonBadRequestResponse"
+    "401":
+      $ref: "../../openapi.yaml#/components/responses/CommonUnauthorizedResponse"
+    "404":
+      $ref: "../../openapi.yaml#/components/responses/CommonNotFoundResponse"
+    "500":
+      $ref: "../../openapi.yaml#/components/responses/CommonInternalServerErrorResponse"
+  
+    

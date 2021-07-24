@@ -1,0 +1,126 @@
+openapi: '3.0.0'
+# 设置此API的基本信息
+info:
+  # API名称
+  title: openapi-test-20201007
+  # API的描述
+  description: open api test ver 20201007
+  # API版本管理
+  version: 1.0.0
+
+# API访问服务URL前缀
+servers:
+  - url: http://localhost:8080/
+
+paths:
+  /user/{id}:
+    $ref: './paths/user/user_by_id.yaml'
+  /user:
+    $ref: './paths/user/user.yaml'
+
+components:
+  # 除了成为单一要素、ImportMapping之外，这里定义的schemas全部制作Model
+  schemas:
+    # 共通项目定义 common.yaml
+    limit:
+      $ref : './components/schemas/common.yaml#/limit'
+    offset:
+      $ref : './components/schemas/common.yaml#/offset'
+    CreatedDate:
+      $ref : './components/schemas/common.yaml#/CreatedDate'
+    ModifiedDate:
+      $ref : './components/schemas/common.yaml#/ModifiedDate'
+    ModifiedByUserId:
+      $ref : './components/schemas/common.yaml#/ModifiedByUserId'
+    BadRequestResponseModel:
+      $ref : './components/schemas/common.yaml#/BadRequestResponseModel'
+    BadRequestInvalidParamsResponseModel:
+      $ref : './components/schemas/common.yaml#/BadRequestInvalidParamsResponseModel'
+
+    # user相关的schema
+    UserSearchResultModel:
+      $ref: './components/schemas/user.yaml#/UserSearchResultModel'
+    UserResultModel:
+      $ref: './components/schemas/user.yaml#/UserResultModel'
+    UserCreateModel:
+      $ref: './components/schemas/user.yaml#/UserCreateModel'
+    UserUpdateModel:
+      $ref: './components/schemas/user.yaml#/UserUpdateModel'
+
+  responses:
+    # 统一项目定义
+    CommonCreatedResponse:
+      $ref : './components/responses/common.yaml#/CommonCreatedResponse'       
+    CommonBadRequestResponse:
+      $ref : './components/responses/common.yaml#/CommonBadRequestResponse'
+    CommonUnauthorizedResponse:
+      $ref : './components/responses/common.yaml#/CommonUnauthorizedResponse'      
+    CommonNotFoundResponse:
+      $ref : './components/responses/common.yaml#/CommonNotFoundResponse'
+    CommonConflictResponse:
+      $ref : './components/responses/common.yaml#/CommonConflictResponse'
+    CommonCreateConflictResponse:
+      $ref : './components/responses/common.yaml#/CommonCreateConflictResponse'
+    CommonUpdateConflictResponse:
+      $ref : './components/responses/common.yaml#/CommonUpdateConflictResponse'
+    CommonInternalServerErrorResponse:
+      $ref : './components/responses/common.yaml#/CommonInternalServerErrorResponse'
+
+  headers:
+    Location:
+      description: 显示创建资源的路径
+      schema:
+        type: string
+        format: uri
+
+  parameters:
+    # 多个API使用的统一参数
+    order:
+      $ref : './components/parameters/common.yaml#/order'
+    fields: 
+      $ref : './components/parameters/common.yaml#/fields'
+    limit: 
+      $ref : './components/parameters/common.yaml#/limit'
+    offset: 
+      $ref : './components/parameters/common.yaml#/offset'
+
+    # 用户相关参数定义
+    id:
+      $ref : './components/parameters/user.yaml#/id'
+    userName:
+      $ref : './components/parameters/user.yaml#/userName'
+    address:
+      $ref : './components/parameters/user.yaml#/address'
+    phone:
+      $ref : './components/parameters/user.yaml#/phone'
+    nation:
+      $ref : './components/parameters/user.yaml#/nation'
+    province:
+      $ref: './components/parameters/user.yaml#/province'
+    city:
+      $ref: './components/parameters/user.yaml#/city'
+    age:
+      $ref: './components/parameters/user.yaml#/age'
+    collage:
+      $ref: './components/parameters/user.yaml#/collage'
+    occupation:
+      $ref: './components/parameters/user.yaml#/occupation'
+    sex:
+      $ref: './components/parameters/user.yaml#/sex'
+    nickname:
+      $ref: './components/parameters/user.yaml#/nickname'
+
+  # 统一security的schema的定义
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: Bearer
+      description: 认证的说明
+
+security:
+  - Bearer: []
+
+tags:
+  - name : users
+    description: 用户信息的操作
+# swagger-cli bundle -t yaml -o G:\java\project\demo\openapispecs\openapi.yaml  openapi.yaml

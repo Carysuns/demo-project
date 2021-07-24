@@ -1,0 +1,75 @@
+id:
+  name: id
+  in: query
+  description: 用户id　：　检索key、完全一致
+  schema:
+    type: integer
+    format: int32
+userName:
+  name: user_name
+  in: query
+  description: 用户名字　：　检索key、完全一致
+  schema:
+    type: string
+address:
+  name: address
+  in: query
+  description: 用户地址　：　检索key、完全一致
+  schema:
+    type: string
+phone:
+  name: phone
+  in: query
+  description: 用户电话　：　检索key、完全一致
+  schema:
+    type: string
+nation:
+  name: nation
+  in: query
+  description: 国籍　：　检索key、完全一致
+  schema:
+    type: string
+province:
+  name: province
+  in: query
+  description: 省份　：　检索key、完全一致
+  schema:
+    type: string
+city:
+  name: city
+  in: query
+  description: 城市　：　检索key、完全一致
+  schema:
+    type: string
+age:
+  name: age
+  in: query
+  description: 年龄　：　检索key、完全一致
+  schema:
+    type: integer
+    format: int32
+sex:
+  name: sex
+  in: query
+  description: 性别　：　检索key、完全一致
+  schema:
+    type: integer
+    format: int32
+occupation:
+  name: occupation
+  in: query
+  description: 职业　：　检索key、完全一致
+  schema:
+    type: string
+collage:
+  name: collage
+  in: query
+  description: 毕业院校　：　检索key、完全一致
+  schema:
+    type: string
+nickname:
+  name: nickname
+  in: query
+  description: 昵称　：　检索key、完全一致
+  schema:
+    type: string

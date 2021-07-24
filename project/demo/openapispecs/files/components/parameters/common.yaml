@@ -1,0 +1,43 @@
+# 多个API中常用的query
+limit:
+  name: limit
+  in: query
+  description: 指定要返回的数据件数
+  schema:
+    $ref: "../../openapi.yaml#/components/schemas/limit"
+offset:
+  name: offset
+  in: query
+  description: 指定在要返回的数据中，不返还从开头用“offset”写的件数的数据
+  schema:
+    $ref: "../../openapi.yaml#/components/schemas/offset"
+AccountId:
+  name: account_id
+  in: query
+  description: 合同ID, 检索键, 完全一致
+  schema: 
+    type: integer
+    format: int64
+GroupId:
+  name: group_id
+  in: query
+  description: 团体ID：检索键，完全一致
+  schema: 
+    type: integer
+    format: int64
+order :
+  name : order
+  in : query
+  description: 以逗号分隔的方式指定排序顺序的降序时，排头为负数
+  style : form
+  explode : false
+  schema:
+    type : string
+fields : 
+  name : fields
+  in : query
+  description: 在列表中显示的列被省略时显示所有列
+  style : form
+  explode : false
+  schema: 
+    type : string

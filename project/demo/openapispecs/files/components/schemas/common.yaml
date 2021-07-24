@@ -1,0 +1,61 @@
+limit:
+  type: integer
+  format: int64
+  minimum: 1
+offset:
+  type: integer
+  format: int64
+  minimum: 0
+BranchNo:
+  type: integer
+  format: int32
+  minimum: 0
+FormItemId:
+  type: integer
+  format: int64
+  minimum: 0
+CreatedDate:
+  type: object
+  properties:
+    created_date:
+      description: 作成日期
+      type: string
+      format: date-time
+ModifiedDate:
+  type: object
+  properties:
+    modified_date:
+      description: 最新更新日期
+      type: string
+      format: date-time
+ModifiedByUserId:
+  type: object
+  properties:
+    modified_by_user_id:
+      description: 最新更新者
+      type: string
+BadRequestResponseModel:
+  type: object
+  description: HTTP Status 400 Bad Request
+  properties:
+    type:
+      description: 识别问题类型的URI引用
+      type: string
+    title:
+      description: 问题类型的概要
+      type: string
+    invalid-params:
+      type: array
+      items:
+        $ref : '../../openapi.yaml#/components/schemas/BadRequestInvalidParamsResponseModel'
+BadRequestInvalidParamsResponseModel:
+  type: array
+  items:
+    type: object
+    properties:
+      name:
+        description: 已禁用的项目名称
+        type: string
+      reason:
+        description: 无效的理由
+        type: string

@@ -1,3 +1,4 @@
+#mysql connection config
 spring:
     datasource:
         driver-class-name:  com.mysql.cj.jdbc.Driver
@@ -9,5 +10,36 @@ spring:
             ddl-auto: update
         database: mysql
 
+#端口号
 server:
     port: 8080 
+
+mybatis:
+    mapper-locations: classpath:mapping/*Mapper.xml
+    type-aliases-package: com.syk.user.entity
+
+#showSql
+logging:
+    level:
+        com:
+            syk:
+                user:
+                    mapper : debug
+
+com:
+    syk:
+        backendcomponent:
+            service:
+                retry-maxcount: 5
+                exponentialbackoff-initialinterval: 2000
+        jwt:
+            # 加密秘钥
+            secret: f4e2e52034348f86b67cde581c0f9eb5
+            # token有效时长，七天，单位秒
+            expire: 604800
+            header: Authorization
+
+shiro-redis:
+    enabled: true
+    redis-manager:
+        host: 127.0.0:6379

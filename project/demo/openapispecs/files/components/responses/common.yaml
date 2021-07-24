@@ -1,0 +1,23 @@
+CommonCreatedResponse:
+  description: 显示资源添加成功
+  headers:
+    Location:
+      $ref : '../../openapi.yaml#/components/headers/Location'
+CommonBadRequestResponse:
+  description: 错误参数
+  content:
+    'application/problem+json':
+      schema:
+        $ref : '../../openapi.yaml#/components/schemas/BadRequestResponseModel'
+CommonUnauthorizedResponse:
+  description: 令牌认证失败
+CommonNotFoundResponse:
+  description: 指定的资源不存在
+CommonConflictResponse:
+  description: 矛盾的数据
+CommonCreateConflictResponse:
+  description: 已经存在相应的资源
+CommonUpdateConflictResponse:
+  description: 相应的资源状态不一致（更新）
+CommonInternalServerErrorResponse:
+  description: 未知错误
