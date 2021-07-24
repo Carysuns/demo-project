@@ -102,6 +102,7 @@ public class UserController implements UserApi {
     // order的类型转换(String -> Collection<Order>)
     Collection<Order> orders = ControllerUtility.toOrders(GeneralUser.class, order);
 
+    // 初始化Order的list
     List<Order> orderList = new ArrayList<>();
 
     // order不为空的情况
