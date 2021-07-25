@@ -15,6 +15,7 @@ import jp.co.tpj.backendcomponent.responsemodel.BadRequestResponseModel;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.shiro.ShiroException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
@@ -110,6 +111,19 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
   public ResponseEntity<Object> handleShiroException(ShiroException ex) {
 
     log.error("shiro异常", ex);
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+  }
+
+  /**
+   * jwt异常的例外处理.
+   *
+   * @param ex jwtToken异常例外
+   * @return
+   */
+  @ExceptionHandler(UnknownAccountException.class)
+  public ResponseEntity<Object> handleAccountException(UnknownAccountException ex) {
+
+    log.error("jwtToken异常", ex);
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
   }
 
