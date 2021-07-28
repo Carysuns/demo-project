@@ -2,6 +2,9 @@ package com.syk.user.component.shiro;
 
 import org.apache.shiro.authc.AuthenticationToken;
 
+/**
+ * JwtToken类.
+ */
 public class JwtToken implements AuthenticationToken {
 
   private String token;
