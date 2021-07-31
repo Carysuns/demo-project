@@ -13,7 +13,17 @@ public interface UserRepositoryInterface extends CrudRepository<GeneralUser, Lon
     JpaSpecificationExecutor<GeneralUser> {
 
   /**
-   * 根据用户id检索用户表.
+   * 用户表检索.
+   * @param id 用户id
+   * @return 用户表信息
    */
   Optional<GeneralUser> findById(Integer id);
+
+  /**
+   * 用户存在判断.
+   * @param userName 用户名
+   * @param password 用户密码
+   * @return 用户表信息
+   */
+  Optional<GeneralUser> findByUserNameAndPassword(String userName, String password);
 }

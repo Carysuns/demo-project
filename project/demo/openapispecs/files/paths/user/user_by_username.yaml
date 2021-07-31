@@ -1,0 +1,22 @@
+get:
+  summary: 用户登录验证
+  description: 根据输入的用户名和密码，判断是否存在
+  operationId: checkUserExist
+  tags:
+    - users
+  parameters:
+    - $ref: "../../openapi.yaml#/components/parameters/userName"
+    - $ref: "../../openapi.yaml#/components/parameters/password"
+  responses:
+    "200":
+      description: 处理成功
+      content:
+        "application/json":
+          schema:
+            $ref: "../../openapi.yaml#/components/schemas/UserResultModel"
+    "400":
+      $ref: "../../openapi.yaml#/components/responses/CommonBadRequestResponse"
+    "404":
+      $ref: "../../openapi.yaml#/components/responses/CommonNotFoundResponse"
+    "500":
+      $ref: "../../openapi.yaml#/components/responses/CommonInternalServerErrorResponse"

@@ -1,11 +1,10 @@
 package com.syk.user.controller.user;
 
+import cn.hutool.crypto.SecureUtil;
+import com.syk.user.component.shiro.JwtUtils;
 import com.syk.user.entity.GeneralUser;
 import com.syk.user.openapi.api.UserApi;
-import com.syk.user.openapi.model.UserCreateModel;
-import com.syk.user.openapi.model.UserResultModel;
-import com.syk.user.openapi.model.UserSearchResultModel;
-import com.syk.user.openapi.model.UserUpdateModel;
+import com.syk.user.openapi.model.*;
 import com.syk.user.service.user.UserSearchCondition;
 import com.syk.user.service.user.UserServiceInterface;
 
@@ -37,9 +36,13 @@ public class UserController implements UserApi {
 
   @Autowired
   private UserControllerMapperInterface userControllerMapper;
+
+  @Autowired
+  JwtUtils jwtUtils;
     
   /**
    * 用户表检索.
+   * @param id 用户id
    * @return 用户表信息
    */
   @Override
@@ -48,7 +51,38 @@ public class UserController implements UserApi {
     log.debug("UserController.findById() : id {}", id);
 
     // 调用userService，根据id取得用户信息
-    Optional<GeneralUser> user = this.userService.fingUserById(id);
+    Optional<GeneralUser> user = this.userService.findUserById(id);
+
+    // 用户信息存在
+    if (user.isPresent()) {
+
+      // GeneralUser转换成UserResultModel
+      GeneralUser generalUser = user.get();
+      UserResultModel resultModel = userControllerMapper.toUserResultModel(generalUser);
+      return ResponseEntity.status(HttpStatus.OK).body(resultModel);
+    } else {
+
+      // 返回404
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
+  }
+
+  /**
+   * 用户存在判断.
+   * @param userName 用户名
+   * @param password 用户密码
+   * @return 用户表信息
+   */
+  @Override
+  public ResponseEntity<UserResultModel> checkUserExist(String userName, String password) {
+
+    log.debug("UserController.checkUserExist() : userName {}, password {}", userName, password);
+
+    String encrytedPassword = SecureUtil.md5(password);
+
+    // 调用userService，根据用户名和密码取得用户信息
+    Optional<GeneralUser> user =
+        this.userService.findUserByUserNameAndPassword(userName, encrytedPassword);
 
     // 用户信息存在
     if (user.isPresent()) {
@@ -170,7 +204,7 @@ public class UserController implements UserApi {
    * @param createModel 用户信息登录model
    */
   @Override
-  public ResponseEntity<Void> create(UserCreateModel createModel) {
+  public ResponseEntity<Token> create(UserCreateModel createModel) {
 
     log.debug("UserController.create()");
     
@@ -180,7 +214,18 @@ public class UserController implements UserApi {
     // 调用Service，登录用户信息
     this.userService.createUser(user);
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(null);
+    // 用户信息再检索
+    UserResultModel resultModel = checkUserExist(
+        createModel.getUserName(), createModel.getPassword()).getBody();
+
+    // 创建token
+    String jwtToken = jwtUtils.generateToken(Long.valueOf(resultModel.getId()));
+
+    // jwtToken的创建
+    Token token = new Token();
+    token.setToken(jwtToken);
+
+    return ResponseEntity.status(HttpStatus.CREATED).body(token);
   }
 
   /**
@@ -200,7 +245,7 @@ public class UserController implements UserApi {
     this.userService.updateUser(user);
 
     // 更新后，用户信息再检索
-    Optional<GeneralUser> generalUser = this.userService.fingUserById(id);
+    Optional<GeneralUser> generalUser = this.userService.findUserById(id);
 
     // 如果用户信息存在
     if (generalUser.isPresent()) {

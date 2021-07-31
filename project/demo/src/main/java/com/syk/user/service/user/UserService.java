@@ -39,9 +39,21 @@ public class UserService implements UserServiceInterface {
    * @return 用户表信息
    */
   @Override
-  public Optional<GeneralUser> fingUserById(Integer id) {
+  public Optional<GeneralUser> findUserById(Integer id) {
 
     return this.userRepository.findById(id);
+  }
+
+  /**
+   * 用户存在判断.
+   * @param userName 用户名
+   * @param password 用户密码
+   * @return 用户表信息
+   */
+  @Override
+  public Optional<GeneralUser> findUserByUserNameAndPassword(String userName, String password) {
+
+    return this.userRepository.findByUserNameAndPassword(userName, password);
   }
 
   /**

@@ -15,7 +15,15 @@ public interface UserServiceInterface {
    * @param id 用户id
    * @return 用户表信息
    */
-  Optional<GeneralUser> fingUserById(Integer id);
+  Optional<GeneralUser> findUserById(Integer id);
+
+  /**
+   * 用户存在判断.
+   * @param userName 用户名
+   * @param password 用户密码
+   * @return 用户表信息
+   */
+  Optional<GeneralUser> findUserByUserNameAndPassword(String userName, String password);
 
   /**
    * 用户表检索.

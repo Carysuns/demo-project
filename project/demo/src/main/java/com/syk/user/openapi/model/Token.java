@@ -9,32 +9,33 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * ModifiedByUserId
+ * jwtToken
  */
+@ApiModel(description = "jwtToken")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2021-07-31T23:05:28.614729900+08:00[Asia/Shanghai]")
 
-public class ModifiedByUserId   {
-  @JsonProperty("modified_by_user_id")
-  private String modifiedByUserId;
+public class Token   {
+  @JsonProperty("token")
+  private String token;
 
-  public ModifiedByUserId modifiedByUserId(String modifiedByUserId) {
-    this.modifiedByUserId = modifiedByUserId;
+  public Token token(String token) {
+    this.token = token;
     return this;
   }
 
   /**
-   * 最新更新者
-   * @return modifiedByUserId
+   * token
+   * @return token
   **/
-  @ApiModelProperty(value = "最新更新者")
+  @ApiModelProperty(value = "token")
 
 
-  public String getModifiedByUserId() {
-    return modifiedByUserId;
+  public String getToken() {
+    return token;
   }
 
-  public void setModifiedByUserId(String modifiedByUserId) {
-    this.modifiedByUserId = modifiedByUserId;
+  public void setToken(String token) {
+    this.token = token;
   }
 
 
@@ -46,21 +47,21 @@ public class ModifiedByUserId   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ModifiedByUserId modifiedByUserId = (ModifiedByUserId) o;
-    return Objects.equals(this.modifiedByUserId, modifiedByUserId.modifiedByUserId);
+    Token token = (Token) o;
+    return Objects.equals(this.token, token.token);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(modifiedByUserId);
+    return Objects.hash(token);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ModifiedByUserId {\n");
+    sb.append("class Token {\n");
     
-    sb.append("    modifiedByUserId: ").append(toIndentedString(modifiedByUserId)).append("\n");
+    sb.append("    token: ").append(toIndentedString(token)).append("\n");
     sb.append("}");
     return sb.toString();
   }
