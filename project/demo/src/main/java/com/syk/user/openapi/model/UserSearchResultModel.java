@@ -15,7 +15,7 @@ import javax.validation.constraints.*;
  * 用户信息一览
  */
 @ApiModel(description = "用户信息一览")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2021-07-17T23:49:43.779832900+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2021-07-31T23:05:28.614729900+08:00[Asia/Shanghai]")
 
 public class UserSearchResultModel   {
   @JsonProperty("users")

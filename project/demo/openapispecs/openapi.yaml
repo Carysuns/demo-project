@@ -80,6 +80,29 @@ paths:
           $ref: '#/components/responses/CommonNotFoundResponse'
         '500':
           $ref: '#/components/responses/CommonInternalServerErrorResponse'
+  /user/username:
+    get:
+      summary: 用户登录验证
+      description: 根据输入的用户名和密码，判断是否存在
+      operationId: checkUserExist
+      tags:
+        - users
+      parameters:
+        - $ref: '#/components/parameters/userName'
+        - $ref: '#/components/parameters/password'
+      responses:
+        '200':
+          description: 处理成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResultModel'
+        '400':
+          $ref: '#/components/responses/CommonBadRequestResponse'
+        '404':
+          $ref: '#/components/responses/CommonNotFoundResponse'
+        '500':
+          $ref: '#/components/responses/CommonInternalServerErrorResponse'
   /user:
     get:
       summary: 用户信息一览检索
@@ -131,7 +154,10 @@ paths:
       responses:
         '201':
           description: 処理成功
-          $ref: '#/components/responses/CommonCreatedResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
         '400':
           $ref: '#/components/responses/CommonBadRequestResponse'
         '401':
@@ -451,6 +477,13 @@ components:
         - height
         - sex
         - occupation
+    Token:
+      description: jwtToken
+      type: object
+      properties:
+        token:
+          description: token
+          type: string
   responses:
     CommonCreatedResponse:
       description: 显示资源添加成功
@@ -583,6 +616,12 @@ components:
       name: nickname
       in: query
       description: 昵称　：　检索key、完全一致
+      schema:
+        type: string
+    password:
+      name: password
+      in: query
+      description: 密码
       schema:
         type: string
   securitySchemes:

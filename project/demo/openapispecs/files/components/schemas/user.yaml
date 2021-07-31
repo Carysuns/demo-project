@@ -254,3 +254,10 @@ UserUpdateModel:
     - height
     - sex
     - occupation
+Token:
+  description: jwtToken
+  type: object
+  properties:
+    token:
+      description: token
+      type: string

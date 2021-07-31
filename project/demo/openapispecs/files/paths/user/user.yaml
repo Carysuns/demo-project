@@ -48,7 +48,10 @@ post:
   responses:
     "201":
       description: 処理成功
-      $ref: "../../openapi.yaml#/components/responses/CommonCreatedResponse"
+      content:
+        "application/json":
+          schema:
+            $ref: "../../openapi.yaml#/components/schemas/Token"
     "400":
       $ref: "../../openapi.yaml#/components/responses/CommonBadRequestResponse"
     "401":

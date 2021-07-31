@@ -6,6 +6,7 @@
 package com.syk.user.openapi.api;
 
 import com.syk.user.openapi.model.BadRequestResponseModel;
+import com.syk.user.openapi.model.Token;
 import com.syk.user.openapi.model.UserCreateModel;
 import com.syk.user.openapi.model.UserResultModel;
 import com.syk.user.openapi.model.UserSearchResultModel;
@@ -30,7 +31,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2021-07-17T23:49:43.779832900+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2021-07-31T23:05:28.614729900+08:00[Asia/Shanghai]")
 
 @Validated
 @Api(value = "user", description = "the user API")
@@ -40,20 +41,53 @@ public interface UserApi {
         return Optional.empty();
     }
 
-    @ApiOperation(value = "用户信息登录", nickname = "create", notes = "用户信息登录的操作", authorizations = {
+    @ApiOperation(value = "用户登录验证", nickname = "checkUserExist", notes = "根据输入的用户名和密码，判断是否存在", response = UserResultModel.class, authorizations = {
         @Authorization(value = "Bearer")
     }, tags={ "users", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 201, message = "显示资源添加成功"),
+        @ApiResponse(code = 200, message = "处理成功", response = UserResultModel.class),
+        @ApiResponse(code = 400, message = "错误参数", response = BadRequestResponseModel.class),
+        @ApiResponse(code = 404, message = "指定的资源不存在"),
+        @ApiResponse(code = 500, message = "未知错误") })
+    @RequestMapping(value = "/user/username",
+        produces = { "application/json", "application/problem+json" }, 
+        method = RequestMethod.GET)
+    default ResponseEntity<UserResultModel> checkUserExist(@ApiParam(value = "用户名字　：　检索key、完全一致") @Valid @RequestParam(value = "user_name", required = false) String userName,@ApiParam(value = "密码") @Valid @RequestParam(value = "password", required = false) String password) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    ApiUtil.setExampleResponse(request, "application/json", "{  \"birthday\" : \"2000-01-23\",  \"note\" : \"note\",  \"user_email\" : \"user_email\",  \"address\" : \"address\",  \"occupation\" : \"occupation\",  \"collage\" : \"collage\",  \"nation\" : \"nation\",  \"city\" : \"city\",  \"user_name\" : \"user_name\",  \"sex\" : 1,  \"password\" : \"password\",  \"province\" : \"province\",  \"phone\" : \"phone\",  \"nickname\" : \"nickname\",  \"id\" : 0,  \"age\" : 6,  \"height\" : \"height\",  \"hobby\" : \"hobby\"}");
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    @ApiOperation(value = "用户信息登录", nickname = "create", notes = "用户信息登录的操作", response = Token.class, authorizations = {
+        @Authorization(value = "Bearer")
+    }, tags={ "users", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 201, message = "処理成功", response = Token.class),
         @ApiResponse(code = 400, message = "错误参数", response = BadRequestResponseModel.class),
         @ApiResponse(code = 401, message = "令牌认证失败"),
         @ApiResponse(code = 409, message = "矛盾的数据"),
         @ApiResponse(code = 500, message = "未知错误") })
     @RequestMapping(value = "/user",
-        produces = { "application/problem+json" }, 
+        produces = { "application/json", "application/problem+json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    default ResponseEntity<Void> create(@ApiParam(value = "用户情报(登录)"  )  @Valid @RequestBody UserCreateModel userCreateModel) {
+    default ResponseEntity<Token> create(@ApiParam(value = "用户情报(登录)"  )  @Valid @RequestBody UserCreateModel userCreateModel) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    ApiUtil.setExampleResponse(request, "application/json", "{  \"token\" : \"token\"}");
+                    break;
+                }
+            }
+        });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

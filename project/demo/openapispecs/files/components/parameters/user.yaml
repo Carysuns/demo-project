@@ -73,3 +73,9 @@ nickname:
   description: 昵称　：　检索key、完全一致
   schema:
     type: string
+password:
+  name: password
+  in: query
+  description: 密码
+  schema:
+    type: string

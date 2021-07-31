@@ -40,7 +40,7 @@ public class AccountRealm extends AuthenticatingRealm {
 
     // 从jwttoken中获取sub，即用户id
     String userId = jwtUtils.getClaimByToken((String) jwtToken.getPrincipal()).getSubject();
-    Optional<GeneralUser> user = userService.fingUserById(Integer.valueOf(userId));
+    Optional<GeneralUser> user = userService.findUserById(Integer.valueOf(userId));
 
     // 用户不存在
     if (!user.isPresent()) {
